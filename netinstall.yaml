@@ -234,16 +234,16 @@
          - lightdm-gtk-greeter
          - lightdm-gtk-greeter-settings
          - xdg-user-dirs-gtk
- - name: "EndeavourOS theming"
-   description: "EndeavourOS XFCE4 theming (unselect to install vanilla)"
-   selected: false
-   critical: false
-   packages:
-      - endeavouros-skel-xfce4
-      - arc-gtk-theme-eos
-      - arc-x-icons-theme
-      - capitaine-cursors
-      - endeavouros-xfce4-terminal-colors
+- name: "EndeavourOS theming"
+  description: "EndeavourOS XFCE4 theming (unselect to install vanilla)"
+  selected: false
+  critical: false
+  packages:
+       - endeavouros-skel-xfce4
+       - arc-gtk-theme-eos
+       - arc-x-icons-theme
+       - capitaine-cursors
+       - endeavouros-xfce4-terminal-colors
 - name: "KDE-Desktop"
   description: "KDE-Plasma Desktop - Simple by default, powerful when needed."
   hidden: false
@@ -316,7 +316,7 @@
   critical: true
   subgroups:
       - name: "EndeavourOS theming"
-        description: "EndeavourOS XFCE4 theming (unselect to install vanilla)"
+        description: "EndeavourOS i3wm theming (unselect to install vanilla)"
         selected: false
         critical: false
         packages:
@@ -327,7 +327,7 @@
           - gtk-engine-murrine
           - endeavouros-xfce4-terminal-colors
       - name: "i3-wm packages"
-        description: "i3wm default packages"
+        description: "i3wm needed packages"
         selected: false
         packages:
           - i3-gaps
