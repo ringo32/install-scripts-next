@@ -198,18 +198,8 @@
   expanded: true
   critical: true
   subgroups:
-      - name: "EndeavourOS theming"
-        description: "EndeavourOS XFCE4 theming (unselect to install vanilla)"
-        selected: false
-        critical: false
-        packages:
-            - endeavouros-skel-xfce4
-            - arc-gtk-theme-eos
-            - arc-x-icons-theme
-            - capitaine-cursors
-            - endeavouros-xfce4-terminal-colors
       - name: "XFCE4 Desktop"
-        description: "XFCE4 default packages"
+        description: "XFCE4 needed packages for the Desktop"
         selected: false
         packages:
          - xfce4
@@ -244,6 +234,16 @@
          - lightdm-gtk-greeter
          - lightdm-gtk-greeter-settings
          - xdg-user-dirs-gtk
+ - name: "EndeavourOS theming"
+   description: "EndeavourOS XFCE4 theming (unselect to install vanilla)"
+   selected: false
+   critical: false
+   packages:
+      - endeavouros-skel-xfce4
+      - arc-gtk-theme-eos
+      - arc-x-icons-theme
+      - capitaine-cursors
+      - endeavouros-xfce4-terminal-colors
 - name: "KDE-Desktop"
   description: "KDE-Plasma Desktop - Simple by default, powerful when needed."
   hidden: false
