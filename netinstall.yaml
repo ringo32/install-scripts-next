@@ -195,11 +195,21 @@
   description: "XFCE4 - lightweight desktop fast and low on system resources, visually appealing and user friendly."
   hidden: false
   selected: false
-  expanded: true
+  expanded: false
   critical: true
   subgroups:
+      - name: "EndeavourOS theming"
+        description: "EndeavourOS XFCE4 theming (unselect to install vanilla)"
+        selected: false
+        critical: false
+        packages:
+            - endeavouros-skel-xfce4
+            - arc-gtk-theme-eos
+            - arc-x-icons-theme
+            - capitaine-cursors
+            - endeavouros-xfce4-terminal-colors
       - name: "XFCE4 Desktop"
-        description: "XFCE4 needed packages for the Desktop"
+        description: "XFCE4 needed packages"
         selected: false
         packages:
          - xfce4
@@ -234,16 +244,6 @@
          - lightdm-gtk-greeter
          - lightdm-gtk-greeter-settings
          - xdg-user-dirs-gtk
-- name: "EndeavourOS theming"
-  description: "EndeavourOS XFCE4 theming (unselect to install vanilla)"
-  selected: false
-  critical: false
-  packages:
-       - endeavouros-skel-xfce4
-       - arc-gtk-theme-eos
-       - arc-x-icons-theme
-       - capitaine-cursors
-       - endeavouros-xfce4-terminal-colors
 - name: "KDE-Desktop"
   description: "KDE-Plasma Desktop - Simple by default, powerful when needed."
   hidden: false
@@ -312,11 +312,11 @@
   description: "i3 tiling window manager, primarily targeted at developers and advanced users."
   hidden: false
   selected: false
-  expanded: true
+  expanded: false
   critical: true
   subgroups:
       - name: "EndeavourOS theming"
-        description: "EndeavourOS i3wm theming (unselect to install vanilla)"
+        description: "EndeavourOS i3 theming (unselect to install vanilla)"
         selected: false
         critical: false
         packages:
