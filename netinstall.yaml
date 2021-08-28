@@ -258,6 +258,8 @@
     - plasma-nm
     - plasma-pa
     - kscreen
+    - kde-gtk-config
+    - breeze-gtk
     - powerdevil
     - sddm-kcm
     - kdeconnect
