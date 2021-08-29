@@ -15,7 +15,6 @@
            - python
            - lsb-release
            - mkinitcpio-openswap
-           - exfatprogs
       - name: "X-system"
         description: "Default X-system"
         selected: true
