@@ -162,6 +162,7 @@
           - eos-log-tool
           - keyserver-rank
           - grub-tools
+          - eos-apps-info
       - name: "EndeavourOS applications selection"
         description: "General tools and applications"
         selected: true
@@ -260,6 +261,7 @@
     - kscreen
     - kde-gtk-config
     - breeze-gtk
+    - khotkeys
     - powerdevil
     - sddm-kcm
     - kdeconnect
