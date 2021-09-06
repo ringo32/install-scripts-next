@@ -348,6 +348,14 @@ _fix_grub_stuff() {
     _run_if_exists_or_complain eos-grub-fix-initrd-generation
 }
 
+_RunUserCommands() {
+    local usercmdfile=/tmp/user_commands.bash
+    if [ -r $usercmdfile ] ; then
+        echo "==> running $(basename $usercmdfile)"
+        bash $usercmdfile
+    fi
+}
+
 _clean_up(){
     local xx
 
@@ -374,6 +382,9 @@ _clean_up(){
     # keep r8168 package but blacklist it; r8169 will be used by default
     xx=/usr/lib/modprobe.d/r8168.conf
     test -r $xx && sed -i $xx -e 's|r8169|r8168|'
+    
+    # run possible user-given commands
+    _RunUserCommands
 }
 
 _desktop_i3(){
