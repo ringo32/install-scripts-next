@@ -36,6 +36,18 @@ cp -rf /etc/skel/.bashrc /tmp/$chroot_path/home/$NEW_USER/.bashrc
 cp -rf /etc/environment /tmp/$chroot_path/etc/environment
 #cp -rf /home/liveuser/.gnupg/gpg.conf /tmp/$chroot_path/etc/pacman.d/gnupg/gpg.conf
 
+_CopyUserCommandsToTarget() {
+    # Copy user commands file to the target to be run there.
+
+    local usercmdfile=/home/liveuser/user_commands.bash
+    local targetdir=/tmp/$chroot_path/tmp
+
+    if [ -r $usercmdfile ] ; then
+        echo "==> copying $(basename $usercmdfile) to target"
+        cp $usercmdfile $targetdir
+    fi
+}
+
 _copy_files(){
     local config_file
 
@@ -103,6 +115,8 @@ _copy_files(){
     fi
     echo "nvidia_card=$card"     >> $nvidia_file
     echo "nvidia_driver=$driver" >> $nvidia_file
+    
+    _CopyUserCommandsToTarget
 }
 
 _copy_files
