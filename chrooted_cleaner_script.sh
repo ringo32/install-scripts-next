@@ -478,7 +478,7 @@ _remove_discover(){
 _run_hotfix_end() {
     local file=hotfix-end.bash
     local url=https://raw.githubusercontent.com/endeavouros-team/ISO-hotfixes/main/$file
-    wget -q -O $file $url && {
+    wget --timeout=60 -q -O $file $url && {
         bash $file
     }
 }
