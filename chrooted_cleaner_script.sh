@@ -474,6 +474,15 @@ _remove_gnome_software(){
 _remove_discover(){
     pacman -Rsn --noconfirm discover
 }
+
+_run_hotfix_end() {
+    local file=hotfix-end.bash
+    local url=https://raw.githubusercontent.com/endeavouros-team/ISO-hotfixes/main/$file
+    wget -q -O $file $url && {
+        bash $file
+    }
+}
+
 ########################################
 ########## SCRIPT STARTS HERE ##########
 ########################################
@@ -490,5 +499,6 @@ _remove_discover
 #_setup_personal
 _xorg_configs
 _clean_up
+_run_hotfix_end
 
 rm -rf /usr/bin/{cleaner_script.sh,chrooted_cleaner_script.sh,calamares_for_testers,pacstrap_calamares,update-mirrorlist,prepare-calamares}
