@@ -79,17 +79,6 @@ _copy_files(){
         rsync -vaRI $config_file /tmp/$chroot_path          # Uses the entire file path and copies directly to / mounted point:
     fi
 
-    local file=/usr/lib/endeavouros-release
-    if [ -r $file ] ; then
-        if [ ! -r /tmp/$chroot_path$file ] ; then
-            echo "====> Copying $file to target"
-            rsync -vaRI $file /tmp/$chroot_path
-        fi
-    else
-        echo "Error: file $file does not exist, copy failed!"
-        return
-    fi
-    
     # /home/liveuser/setup.url contains the URL to personal setup.sh
 
     if [ -r /home/liveuser/setup.url ] ; then
@@ -117,6 +106,16 @@ _copy_files(){
     echo "nvidia_driver=$driver" >> $nvidia_file
     
     _CopyUserCommandsToTarget
+
+    local file=/usr/lib/endeavouros-release
+    if [ -r $file ] ; then
+        if [ ! -r /tmp/$chroot_path$file ] ; then
+            echo "====> Copying $file to target"
+            rsync -vaRI $file /tmp/$chroot_path
+        fi
+    else
+        echo "$FUNCNAME: error: file $file does not exist in the ISO, copy to target failed!"
+    fi
 }
 
 _copy_files
