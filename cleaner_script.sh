@@ -36,6 +36,18 @@ cp -rf /etc/skel/.bashrc /tmp/$chroot_path/home/$NEW_USER/.bashrc
 cp -rf /etc/environment /tmp/$chroot_path/etc/environment
 #cp -rf /home/liveuser/.gnupg/gpg.conf /tmp/$chroot_path/etc/pacman.d/gnupg/gpg.conf
 
+_CopyUserCommandsToTarget() {
+    # Copy user commands file to the target to be run there.
+
+    local usercmdfile=/home/liveuser/user_commands.bash
+    local targetdir=/tmp/$chroot_path/tmp
+
+    if [ -r $usercmdfile ] ; then
+        echo "==> copying $(basename $usercmdfile) to target"
+        cp $usercmdfile $targetdir
+    fi
+}
+
 _copy_files(){
     local config_file
 
@@ -47,7 +59,7 @@ _copy_files(){
 
         echo "====> Fetching DM config file $config_file"
 
-        local qt_sddm_config=https://raw.githubusercontent.com/endeavouros-team/install-scripts/master/sddm.conf.d/kde_settings.conf
+        local qt_sddm_config=https://raw.githubusercontent.com/endeavouros-team/install-scripts-next/08-2021/sddm.conf.d/kde_settings.conf
         mkdir -p $(dirname $config_file)
         wget -q --timeout=10 -O $config_file $qt_sddm_config || {
             echo "Error: fetching sddm config failed!"
@@ -67,17 +79,6 @@ _copy_files(){
         rsync -vaRI $config_file /tmp/$chroot_path          # Uses the entire file path and copies directly to / mounted point:
     fi
 
-    local file=/usr/lib/endeavouros-release
-    if [ -r $file ] ; then
-        if [ ! -r /tmp/$chroot_path$file ] ; then
-            echo "====> Copying $file to target"
-            rsync -vaRI $file /tmp/$chroot_path
-        fi
-    else
-        echo "Error: file $file does not exist, copy failed!"
-        return
-    fi
-    
     # /home/liveuser/setup.url contains the URL to personal setup.sh
 
     if [ -r /home/liveuser/setup.url ] ; then
@@ -103,6 +104,18 @@ _copy_files(){
     fi
     echo "nvidia_card=$card"     >> $nvidia_file
     echo "nvidia_driver=$driver" >> $nvidia_file
+    
+    _CopyUserCommandsToTarget
+
+    local file=/usr/lib/endeavouros-release
+    if [ -r $file ] ; then
+        if [ ! -r /tmp/$chroot_path$file ] ; then
+            echo "====> Copying $file to target"
+            rsync -vaRI $file /tmp/$chroot_path
+        fi
+    else
+        echo "$FUNCNAME: error: file $file does not exist in the ISO, copy to target failed!"
+    fi
 }
 
 _copy_files

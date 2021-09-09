@@ -2,7 +2,7 @@
 
 # New version of cleaner_script
 # Made by @fernandomaroto and @manuel 
-# Any failed command will just be skiped, error message may pop up but won't crash the install process
+# Any failed command will just be skipped, error message may pop up but won't crash the install process
 # Net-install creates the file /tmp/run_once in live environment (need to be transfered to installed system) so it can be used to detect install option
 # ISO-NEXT specific cleanup removals and additions (08-2021) @killajoe and @manuel
 
@@ -180,7 +180,6 @@ _clean_offline_packages(){
     xcompmgr
     memtest86+
     mkinitcpio-archiso
-    openssh
 )
     local xx
     # @ does one by one to avoid errors in the entire process
@@ -349,6 +348,14 @@ _fix_grub_stuff() {
     _run_if_exists_or_complain eos-grub-fix-initrd-generation
 }
 
+_RunUserCommands() {
+    local usercmdfile=/tmp/user_commands.bash
+    if [ -r $usercmdfile ] ; then
+        echo "==> running $(basename $usercmdfile)"
+        bash $usercmdfile
+    fi
+}
+
 _clean_up(){
     local xx
 
@@ -375,6 +382,9 @@ _clean_up(){
     # keep r8168 package but blacklist it; r8169 will be used by default
     xx=/usr/lib/modprobe.d/r8168.conf
     test -r $xx && sed -i $xx -e 's|r8169|r8168|'
+    
+    # run possible user-given commands
+    _RunUserCommands
 }
 
 _desktop_i3(){
@@ -464,6 +474,15 @@ _remove_gnome_software(){
 _remove_discover(){
     pacman -Rsn --noconfirm discover
 }
+
+_run_hotfix_end() {
+    local file=hotfix-end.bash
+    local url=https://raw.githubusercontent.com/endeavouros-team/ISO-hotfixes/main/$file
+    wget --timeout=60 -q -O $file $url && {
+        bash $file
+    }
+}
+
 ########################################
 ########## SCRIPT STARTS HERE ##########
 ########################################
@@ -480,5 +499,6 @@ _remove_discover
 #_setup_personal
 _xorg_configs
 _clean_up
+_run_hotfix_end
 
 rm -rf /usr/bin/{cleaner_script.sh,chrooted_cleaner_script.sh,calamares_for_testers,pacstrap_calamares,update-mirrorlist,prepare-calamares}
