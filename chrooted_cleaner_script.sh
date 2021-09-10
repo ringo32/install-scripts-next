@@ -352,6 +352,9 @@ _RunUserCommands() {
     local usercmdfile=/tmp/user_commands.bash
     if [ -r $usercmdfile ] ; then
         echo "==> running $(basename $usercmdfile)"
+        echo ">>>> Contents of $usercmdfile >>>>"
+        cat $usercmdfile
+        echo "<<<< Contents of $usercmdfile <<<<"
         bash $usercmdfile
     fi
 }
