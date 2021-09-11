@@ -98,10 +98,19 @@ _os_lsb_release(){
 
     # Check if offline is still copying the files, sed is the way to go!
     # same as os-release hook
-    sed -i -e s'|^NAME=.*$|NAME=\"EndeavourOS\"|' -e s'|^PRETTY_NAME=.*$|PRETTY_NAME=\"EndeavourOS\"|' -e s'|^HOME_URL=.*$|HOME_URL=\"https://endeavouros.com\"|' -e s'|^DOCUMENTATION_URL=.*$|DOCUMENTATION_URL=\"https://endeavouros.com/wiki/\"|' -e s'|^SUPPORT_URL=.*$|SUPPORT_URL=\"https://forum.endeavouros.com\"|' -e s'|^BUG_REPORT_URL=.*$|BUG_REPORT_URL=\"https://github.com/endeavouros-team\"|' -e s'|^LOGO=.*$|LOGO=endeavouros|' /usr/lib/os-release
+    sed -i /usr/lib/os-release \
+        -e s'|^NAME=.*$|NAME=\"EndeavourOS\"|' \
+        -e s'|^PRETTY_NAME=.*$|PRETTY_NAME=\"EndeavourOS\"|' \
+        -e s'|^HOME_URL=.*$|HOME_URL=\"https://endeavouros.com\"|' \
+        -e s'|^DOCUMENTATION_URL=.*$|DOCUMENTATION_URL=\"https://discovery.endeavouros.com/\"|' \
+        -e s'|^SUPPORT_URL=.*$|SUPPORT_URL=\"https://forum.endeavouros.com\"|' \
+        -e s'|^BUG_REPORT_URL=.*$|BUG_REPORT_URL=\"https://github.com/endeavouros-team\"|' \
+        -e s'|^LOGO=.*$|LOGO=endeavouros|'
 
     # same as lsb-release hook
-    sed -i -e s'|^DISTRIB_ID=.*$|DISTRIB_ID=EndeavourOS|' -e s'|^DISTRIB_DESCRIPTION=.*$|DISTRIB_DESCRIPTION=\"EndeavourOS Linux\"|' /etc/lsb-release
+    sed -i /etc/lsb-release \
+        -e s'|^DISTRIB_ID=.*$|DISTRIB_ID=EndeavourOS|' \
+        -e s'|^DISTRIB_DESCRIPTION=.*$|DISTRIB_DESCRIPTION=\"EndeavourOS Linux\"|'
 
 }
 
