@@ -336,7 +336,7 @@ _manage_nvidia_packages() {
             ;;
         no)
             local remove="$(pacman -Qqs nvidia* | grep ^nvidia)"
-            [ "$remove" != "" ] && pacman -Rsn --noconfirm $remove
+            [ "$remove" != "" ] && pacman -Rsn --noconfirm $remove && /var/lib/dkms/nvidia
             ;;
     esac
 }
