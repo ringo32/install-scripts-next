@@ -320,7 +320,10 @@ _manage_nvidia_packages() {
             echo "==> Info: running the old nvidia mgmt code instead."
             if [ -z "$(lspci -k | grep -P 'VGA|3D|Display' | grep -w NVIDIA)" ] || [ -z "$(lspci -k | grep -B2 "Kernel driver in use: nvidia" | grep -P 'VGA|3D|Display')" ] ; then
                 local xx="$(pacman -Qqs nvidia* | grep ^nvidia)"
-                test -n "$xx" && pacman -Rsn $xx --noconfirm
+                if [ -n "$xx" ] ; then
+                    pacman -Rsn $xx --noconfirm
+                    rm -rf /var/lib/dkms/nvidia
+                fi
             fi
         fi
         return
@@ -336,7 +339,10 @@ _manage_nvidia_packages() {
             ;;
         no)
             local remove="$(pacman -Qqs nvidia* | grep ^nvidia)"
-            [ "$remove" != "" ] && pacman -Rsn --noconfirm $remove && /var/lib/dkms/nvidia
+            if [ "$remove" != "" ] ; then
+                pacman -Rsn --noconfirm $remove
+                rm -rf /var/lib/dkms/nvidia
+            fi
             ;;
     esac
 }
