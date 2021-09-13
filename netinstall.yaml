@@ -185,7 +185,7 @@
   packages:
         - firefox-i18n-$LOCALE
 - name: LTS Kernel in addition
-  description: Adding Long Term Supported Kernel in addition to main one
+  description: Adding Long-Term Supported Kernel in addition to main one
   hidden: false
   selected: false
   critical: true
@@ -248,7 +248,7 @@
         - xfce4-whiskermenu-plugin
         - xfce4-xkb-plugin
 - name: KDE-Desktop
-  description: 'KDE-Plasma Desktop - Simple by default, powerful when needed.'
+  description: KDE-Plasma Desktop - Simple by default, powerful when needed.
   hidden: false
   selected: false
   critical: true
@@ -317,8 +317,7 @@
         - totem
         - xdg-user-dirs-gtk
 - name: i3 Window Manager
-  description: >-
-    i3 tiling window manager, primarily targeted at developers and advanced
+  description: i3 tiling window manager, primarily targeted at developers and advanced
     users.
   hidden: false
   selected: false
@@ -406,8 +405,7 @@
         - network-manager-applet
         - xdg-user-dirs-gtk
 - name: Cinnamon-Desktop
-  description: >-
-    Cinnamon Desktop - advanced innovative features and a traditional user
+  description: Cinnamon Desktop - advanced innovative features and a traditional user
     experience.
   hidden: false
   selected: false
