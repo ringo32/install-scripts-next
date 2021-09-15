@@ -167,6 +167,7 @@
       description: General tools and applications
       selected: true
       packages:
+        - duf
         - firefox
         - glances
         - hwinfo
