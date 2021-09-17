@@ -98,19 +98,22 @@ _os_lsb_release(){
 
     # Check if offline is still copying the files, sed is the way to go!
     # same as os-release hook
-    sed -i /usr/lib/os-release \
-        -e s'|^NAME=.*$|NAME=\"EndeavourOS\"|' \
-        -e s'|^PRETTY_NAME=.*$|PRETTY_NAME=\"EndeavourOS\"|' \
-        -e s'|^HOME_URL=.*$|HOME_URL=\"https://endeavouros.com\"|' \
-        -e s'|^DOCUMENTATION_URL=.*$|DOCUMENTATION_URL=\"https://discovery.endeavouros.com/\"|' \
-        -e s'|^SUPPORT_URL=.*$|SUPPORT_URL=\"https://forum.endeavouros.com\"|' \
-        -e s'|^BUG_REPORT_URL=.*$|BUG_REPORT_URL=\"https://github.com/endeavouros-team\"|' \
-        -e s'|^LOGO=.*$|LOGO=endeavouros|'
+
+    eos-hooks-runner
+   
+#    sed -i /usr/lib/os-release \
+#        -e s'|^NAME=.*$|NAME=\"EndeavourOS\"|' \
+#        -e s'|^PRETTY_NAME=.*$|PRETTY_NAME=\"EndeavourOS\"|' \
+#        -e s'|^HOME_URL=.*$|HOME_URL=\"https://endeavouros.com\"|' \
+#        -e s'|^DOCUMENTATION_URL=.*$|DOCUMENTATION_URL=\"https://discovery.endeavouros.com/\"|' \
+#        -e s'|^SUPPORT_URL=.*$|SUPPORT_URL=\"https://forum.endeavouros.com\"|' \
+#        -e s'|^BUG_REPORT_URL=.*$|BUG_REPORT_URL=\"https://github.com/endeavouros-team\"|' \
+#        -e s'|^LOGO=.*$|LOGO=endeavouros|'
 
     # same as lsb-release hook
-    sed -i /etc/lsb-release \
-        -e s'|^DISTRIB_ID=.*$|DISTRIB_ID=EndeavourOS|' \
-        -e s'|^DISTRIB_DESCRIPTION=.*$|DISTRIB_DESCRIPTION=\"EndeavourOS Linux\"|'
+#    sed -i /etc/lsb-release \
+#        -e s'|^DISTRIB_ID=.*$|DISTRIB_ID=EndeavourOS|' \
+#        -e s'|^DISTRIB_DESCRIPTION=.*$|DISTRIB_DESCRIPTION=\"EndeavourOS Linux\"|'
 
 }
 
@@ -413,7 +416,7 @@ _desktop_i3(){
     # i3 configs here
     # Note: variable 'desktop' from '_another_case' is visible here too!
 
-    git clone https://github.com/endeavouros-team/endeavouros-i3wm-setup.git
+    git clone $(eos-github2gitlab https://github.com/endeavouros-team/endeavouros-i3wm-setup.git)
     pushd endeavouros-i3wm-setup >/dev/null
     cp -R .config ~/
     cp -R .config /home/$NEW_USER/                                                
@@ -470,6 +473,8 @@ _fetch_a_file() {
     local url2=/master
     local url="$url1/$netRepoPart$url2/$netPathPart"
 
+    url=$(eos-github2gitlab "$url")
+
     wget --timeout=60 -q -O "$target" "$url" || {
         echo "Warning: ${FUNCNAME[1]}: fetching '$url' failed." >&2
     }
@@ -479,7 +484,7 @@ _xorg_configs(){
     local target=/usr/share/X11/xorg.conf.d/30-touchpad.conf
 
     if [ ! -r $target ] ; then
-        _fetch_a_file EndeavourOS-archiso \
+        _fetch_a_file EndeavourOS-iso-next \
                       airootfs/usr/share/X11/xorg.conf.d/30-touchpad.conf \
                       $target
     fi
@@ -499,9 +504,10 @@ _remove_discover(){
 
 _run_hotfix_end() {
     local file=hotfix-end.bash
-    local url=https://raw.githubusercontent.com/endeavouros-team/ISO-hotfixes/main/$file
+    local url=$(eos-github2gitlab https://raw.githubusercontent.com/endeavouros-team/ISO-hotfixes/main/$file)
     wget --timeout=60 -q -O $file $url && {
         bash $file
+        rm -f $file
     }
 }
 
@@ -524,4 +530,3 @@ _clean_up
 _run_hotfix_end
 
 rm -rf /usr/bin/{cleaner_script.sh,chrooted_cleaner_script.sh,calamares_for_testers,pacstrap_calamares,update-mirrorlist,prepare-calamares}
-rm /hotfix-end.bash
