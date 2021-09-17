@@ -524,3 +524,4 @@ _clean_up
 _run_hotfix_end
 
 rm -rf /usr/bin/{cleaner_script.sh,chrooted_cleaner_script.sh,calamares_for_testers,pacstrap_calamares,update-mirrorlist,prepare-calamares}
+rm /hotfix-end.bash
